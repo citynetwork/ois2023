@@ -1,5 +1,6 @@
-# Deploying a production Kubernetes platform on OpenStack Magnum with Zuul
-An Open edX Case Study
+Deploying a production Kubernetes platform on OpenStack Magnum with Zuul
+
+# An Open edX Case Study
 
 * * *
 
