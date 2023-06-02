@@ -62,6 +62,7 @@ Tutor aims to simplify the installation and upgrade process of Open edX platform
 
 Tutor provides comprehensive documentation that offers detailed information on how to use the distribution effectively. If you want to explore further, you can refer to the official Tutor documentation for more insights.
 
+
 ## Our goals
 
 <!-- Note -->
@@ -77,4 +78,3 @@ In order to adopt the new Tutor deployment method, our aim was to identify a sol
 * Stateful Configuration Management: We sought to maintain the ability to manage our Open edX platform through a stateful configuration engine. In our previous setup, we used Heat stacks, and now we wanted to use Kubernetes deployments as the orchestration tool.
 
 * Zuul/Gerrit Integration: Instead of GitLab CI, we aimed to utilize Zuul as our preferred CI/CD tool. Zuul/Gerrit's integration would provide the necessary capabilities for code review, job orchestration, and maintaining a smooth development and deployment workflow.
-
