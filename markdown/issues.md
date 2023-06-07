@@ -14,6 +14,16 @@ Unfortunately, Octavia is always addressed last, as its functionality depends on
 Even after these issues are solved and we can communicate  with the Octavia API, often the loadbalancers are stuck in an ERROR state, which we can't fix it on 
 our own and need admin privileges to fix.
 
+
+### Solutions?
+
+`ClusterIP`
+
+`NodePort`
+
+`LoadBalancer` with `externalIPs`
+
+<!-- Note -->
 To mitigate such downtime during outages, we explored an alternative solution to expose our Kubernetes service without relying on Octavia.
 We use Caddy as a web server as it is used in Tutor both as a web proxy and for generating SSL/TLS certificates at runtime.
 
@@ -63,6 +73,14 @@ This problem of pods getting stuck in the "Terminating" state due to the inabili
 
 The workaround suggested in the bug reports was to manually delete the orphaned pod directory and restart the kubelet service, which works for us also. But we have a CI driven deployment and it's very complicated to manually shell into nodes and deleting stale directories when the pipeline is waiting on terminating (orphaned) pods, which will be stuck forever if stale directories are not manually deleted.
 
+
+### Solutions?
+
+**Maybe** fixed in a recent Kubernetes release?
+
+(We don't know for sure.)
+
+<!-- Note -->
 Ideally, kubelet should intelligently deal with the orphaned pods, cleaning a stale directory manually should not be required.
 
 As per the bug reports the orphaned pods issue is present in Kubernetes versions up to atleast 1.24. It is *possibly* fixed in later releases, which brings us to our next issue.

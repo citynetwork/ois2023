@@ -1,7 +1,8 @@
 # Our stack today
 
 
-## OpenStack
+## OpenStack <!-- .element class="hidden" -->
+![OpenStack logo](images/OpenStack-Logo-Vertical.svg)
 
 <!-- Note -->
 
@@ -18,7 +19,8 @@ While both the deployment of labs and the deployment of the Open edX infrastruct
 Although we have replaced the Heat-driven approach to deploy the platform with one that interacts with Kubernetes, we have not replaced the Heat-driven approach to deploy our interactive labs.
 
 
-## Magnum
+## Magnum <!-- .element class="hidden" -->
+![OpenStack Magnum logo](images/magnum-logo.svg)
 
 <!-- Note -->
 
@@ -27,7 +29,6 @@ Within our cloud infrastructure, we had two options available for container orch
 
 
 ### Private registry
-
 <!-- Note -->
 
 We needed a container orchestration service that could accommodate custom-built Docker images, and thus we decided to utilize the private Docker registry provided by Magnum. The built-in Docker registry runs locally on each Kubernetes's worker nodes localhost. It does not require authentication, making it easy to publish and pull images without any configuration changes to Tutor.
@@ -39,8 +40,8 @@ In our case it's not native OpenStack Swift that backs the registry, but Ceph ra
 We don't just rely on a single registry, but instead, we have two registries -one for each region. All images are available in both regions, ensuring redundancy and availability across our infrastructure.
 
 
-## Kubernetes
-
+## Kubernetes <!-- .element class="hidden" -->
+![Kubernetes logo](images/kubernetes-logo.svg)
 <!-- Note -->
 
 Magnum lets you create clusters via the OpenStack APIs. To do that, you base your configuration on a cluster template.
@@ -54,8 +55,8 @@ We deploy our cluster with Kubernetes version as v.1.21.10 on Fedora CoreOS 34 w
 Octavia is the OpenStack load balancing service. We create a Kubernetes cluster with Magnum and use an Octavia Load Balancer to access it from the public network, via the the load balancer’s floating IP.
 
 
-## Ceph
-
+## Ceph <!-- .element class="hidden" -->
+![Ceph logo](images/ceph-logo.svg)
 <!-- Note -->
 
 To achieve automatic replication between the primary and DR site, we use Backup and Restore policy using the Ceph object gateway S3 API. We don't use the multi-site replication as provided by Ceph natively.
@@ -70,8 +71,8 @@ In our environment, the cron job is responsible for capturing MySQL and MongoDB 
 So, in case of any incident, we can do a failover to the DR site for uniterrupted services.
 
 
-## Zuul
-
+## Zuul <!-- .element class="hidden" -->
+![Gerrit and Zuul logos](images/gerrit-zuul-logo.svg)
 <!-- Note -->
 
 Company-wide, we adopted Gerrit as a code review tool and Zuul for CI/CD to align with OpenStack upstream. So we migrated from Gitlab talking to OpenStack APIs to Gerrit/Zuul talking to the Kubernetes API.
