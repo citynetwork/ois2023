@@ -10,7 +10,6 @@ Starting from the Maple release of Open edX, upstream deprecated its prior metho
 To adapt to this change, we made the switch from OpenStack Heat to Kubernetes on OpenStack Magnum.
 
 This shift allowed us to deploy the Open edX platform in containers, and *that* makes things more scalable and flexible for us.
-It's also easier for us to manage.
 
 Alongside the deployment changes, we also had a transition in our CI-driven deployment approach. We moved from Gitlab CI to Zuul.
  
@@ -25,9 +24,24 @@ As mentioned earlier, our platform is built on Open edX. Now let me provide you 
 
 Open edX is an open-source learning management system (LMS) an online course platform that allows individuals and organizations to create, deliver, and manage online educational content. 	
 
+
+### Learning Management System
+
+<!-- Note -->
+
 The edX platform consists of three main components. Firstly, the Learning Management System (LMS) serves as the application through which learners access and engage with the course materials. The LMS provides a user-friendly interface for learners to view and interact with the educational content.
 
+
+### Studio
+
+<!-- Note -->
+
 Secondly, the platform includes Studio, an advanced course creation tool designed for instructors. It is the content management system for creating courses and course libraries in the Open edX platform.
+
+
+### Django Admin Panel
+
+<!-- Note -->
 
 Lastly, Django Admin panel, which allows the administrators to handle tasks such as magnaging data and setting permissions.
 
