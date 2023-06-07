@@ -8,14 +8,14 @@
 
 Our cloud infrastructure runs on OpenStack, and we use it for both the infrastructure of the learning platform and our lab environments.
 
-In our previous setup, we used the Open edX native installation method, which was deploying Open edX platform onto cloud VMs or baremetal servers using Ansible roles or playbooks (It was called "native" because it deployed directly onto cloud VMs or baremetal servers, rather than into Vagrant-managed VMs). We used Openstack Heat and Ansible to deploy our learning platforms to OpenStack VMs. After transitioning to Docker-based deployment, i.e., containerizing the services and running them on Kubernetes, we use OpenStack Magnum to deploy our Kubernetes cluster.
+In our previous setup, we used the Open edX native installation method, which was deploying Open edX platform onto cloud VMs or baremetal servers using Ansible roles or playbooks (It was called "native" because it deployed directly onto cloud VMs or baremetal servers, rather than into Vagrant-managed VMs). We used Openstack Heat and Ansible to deploy our learning platforms to OpenStack VMs. After transitioning to Docker-based deployment, i.e., containerizing the services and running them on Kubernetes, we use OpenStack Magnum to deploy our Kubernetes cluster.
 
 Additionally, we run a self-paced, interactive learning platform, meaning we provide the learners with access to complex, realistic distributed environments on demand where they can learn things by actually doing it and OpenStack Heat comes in handy.
 
 Using a Heat template, we can define an exactly reproducible, self-contained environment consisting of, say, ten servers in three networks connected with two routers and arbitrarily involved configurations for each server. 
 Heat also provides the ability to suspend an entire stack, and then resume it at a much later date in the exact same state, which makes our platform very cost-effective.
 
-While both the deployment of labs and the deployment of the Open edX infrastructure involve the use of Heat, their approaches are completely different.
+While both the deployment of labs and the deployment of the Open edX infrastructure involve the use of Heat, their approaches are completely different.
 Although we have replaced the Heat-driven approach to deploy the platform with one that interacts with Kubernetes, we have not replaced the Heat-driven approach to deploy our interactive labs.
 
 
@@ -77,7 +77,7 @@ So, in case of any incident, we can do a failover to the DR site for uniterrupte
 
 Company-wide, we adopted Gerrit as a code review tool and Zuul for CI/CD to align with OpenStack upstream. So we migrated from Gitlab talking to OpenStack APIs to Gerrit/Zuul talking to the Kubernetes API.
 
-We make all configuration and setup changes to an Open edX environment directly from our Gerrit/Zuul review toolchain and don't do any manual changes to the Kubernetes environment.
+We make all configuration and setup changes to an Open edX environment directly from our Gerrit/Zuul review toolchain and don't do any manual changes to the Kubernetes environment.
 
 So, we have an end-to-end Tutor deployment, to a Magnum-managed Kubernetes cluster, from Zuul.
 
