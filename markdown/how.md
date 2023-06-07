@@ -9,7 +9,7 @@ Our cloud infrastructure runs on OpenStack, and we use it for both the infrastru
 
 In our previous setup, we used the Open edX native installation method, which was deploying Open edX platform onto cloud VMs or baremetal servers using Ansible roles or playbooks (It was called "native" because it deployed directly onto cloud VMs or baremetal servers, rather than into Vagrant-managed VMs). We used Openstack Heat and Ansible to deploy our learning platforms to OpenStack VMs. After transitioning to Docker-based deployment, i.e., containerizing the services and running them on Kubernetes, we use OpenStack Magnum to deploy our Kubernetes cluster.
 
-Additionally, we run a self-paced, interactive learning platform, meaning we provide the learners with access to arbitrarily complex, realistic distributed environments on demand where they can learn things by actually doing it and OpenStack Heat comes in handy.
+Additionally, we run a self-paced, interactive learning platform, meaning we provide the learners with access to complex, realistic distributed environments on demand where they can learn things by actually doing it and OpenStack Heat comes in handy.
 
 Using a Heat template, we can define an exactly reproducible, self-contained environment consisting of, say, ten servers in three networks connected with two routers and arbitrarily involved configurations for each server. 
 Heat also provides the ability to suspend an entire stack, and then resume it at a much later date in the exact same state, which makes our platform very cost-effective.
@@ -46,7 +46,6 @@ We don't just rely on a single registry, but instead, we have two registries -on
 Magnum lets you create clusters via the OpenStack APIs. To do that, you base your configuration on a cluster template.
 The template defines paramters how the cluster will be constructed.
 
-We deploy our kubernetes cluster with the following configuration.
 In our production environment, we have six node Kubernetes clusters, three control plane nodes, and three worker nodes.
 
 We deploy our cluster with Kubernetes version as v.1.21.10 on Fedora CoreOS 34 with Cinder CSI driver enabled.
@@ -87,4 +86,4 @@ Let me explain our workflow in more detail:
   That's how we isolate the platforms from each other.
 * When making changes to a platform, a Zuul job is triggered to build the corresponding Docker images.
 * Subsequently, another  Zuul job pushes this image to a Swift backed registry that Magnum makes available to Kubernetes.
-* Lastly, a Zuul job that deploys a Kubernetes cluster.
+* Lastly, a Zuul job that deploys the changes to Kubernetes cluster.

@@ -27,7 +27,7 @@ We were looking for a solution to expose the caddy service other than the loadba
 * Lastly, there is a way not widely used among the kubernetes community because many are using cloud provider's Load balancers.
 Using ClusterIP with external IP
 
-Customers can expose their Kubernetes cluster to external traffic using ClusterIP and an external IP address. The Kubernetes service type is ClusterIP, but an external IP address can be specified using the externalIP property. This solution requires that the customer maps the external IP address of a service to their private IP addresses in the cluster. 
+Customers can expose their Kubernetes cluster to external traffic using ClusterIP and an external IP address. This solution requires that the customer maps the external IP address of a service to their private IP addresses in the cluster. 
 
 Unfortunately, we encountered issues in utilizing a Floating IP address as an external IP address. It was due to the fact that our Floating IP address was mapped to a private address within a different subnet than the one used by the ClusterIP.
 
@@ -55,11 +55,9 @@ We are facing this issue while performing a rolling update in our deployment.
 What happens in a rolling deployment?
 During a rolling deployment, the controller deletes and recreates pods with the updated configuration, one by one, without causing downtime to the cluster.
 
-However, our rolling deployment gets stuck when the pod running the old version remains in the Terminating state, and the new version that needs to be recreated gets stuck in the ContainerCreating state. This scenario is encountered with ReadWriteOnce access mode for Persistent Volumes (meaning when the volume can be mounted as a read-write by a single node). If we could use ReadWriteMany access mode (meaning when the volume can be mounted as read-write by many nodes),  we did not face this issue.
+However, our rolling deployment gets stuck when the pod running the old version remains in the Terminating state, and the new version that needs to be recreated gets stuck in the ContainerCreating state. This scenario is encountered with ReadWriteOnce access mode for Persistent Volumes. If we could use ReadWriteMany access mode,  we did not face this issue.
 
-When we check kubelet logs, we notice massive log entries stating "Orphaned pod found <pod UID>, but volumes are still present on the disk." So we dig deeper into the logs and see when the pod is getting deleted, it tries to unmount the CSI volumes.
-
-And to teardown the associated volume, it tries to remove the mount directory. It tries to run os.remove method on the volume path, and if something goes wrong while this execution,  volume path is left on the node. However mount path is deleted and when kubelet retries to unmount the volume, it will fail unmount operation as it will not be able to find the mount path.
+When we check kubelet logs, we notice massive log entries stating "Orphaned pod found <pod UID>, but volumes are still present on the disk." So we dig deeper into the logs and see when the pod is getting deleted, it tries to unmount the CSI volumes. The unmount operation unmounts the volume, but fails to remove stale volume paths from the node.
 
 This problem of pods getting stuck in the "Terminating" state due to the inability to clean volume subPath mounts is a known issue in Kubernetes. Several users have reported similar issues and there is no definite cause what arises the issue.
 
