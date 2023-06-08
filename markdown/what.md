@@ -112,6 +112,8 @@ Tutor aims to simplify the installation and upgrade process of Open edX platfor
 
 * Plugin System: Tutor uses a plugin-driven system that allows users to extend or customize Open edX without modifying the core codebase.
 
+* Kubernetes integration: Tutor comes with Kubernetes integration and facilitates running the Open edX platform on a Kubernetes cluster. Under the hood, Tutor wraps `kubectl` commands to interact with the cluster.
+
 Tutor provides comprehensive documentation that offers detailed information on how to use the distribution effectively. If you want to explore further, you can refer to the official Tutor documentation for more insights.
 
 

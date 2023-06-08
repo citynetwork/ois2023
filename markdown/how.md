@@ -12,9 +12,6 @@ In our previous setup, we used the Open edX native installation method, which w
 
 Additionally, we run a self-paced, interactive learning platform, meaning we provide the learners with access to complex, realistic distributed environments on demand where they can learn things by actually doing it and OpenStack Heat comes in handy.
 
-Using a Heat template, we can define an exactly reproducible, self-contained environment consisting of, say, ten servers in three networks connected with two routers and arbitrarily involved configurations for each server. 
-Heat also provides the ability to suspend an entire stack, and then resume it at a much later date in the exact same state, which makes our platform very cost-effective.
-
 While both the deployment of labs and the deployment of the Open edX infrastructure involve the use of Heat, their approaches are completely different.
 Although we have replaced the Heat-driven approach to deploy the platform with one that interacts with Kubernetes, we have not replaced the Heat-driven approach to deploy our interactive labs.
 
@@ -31,7 +28,7 @@ Within our cloud infrastructure, we had two options available for container orch
 ### Private registry
 <!-- Note -->
 
-We needed a container orchestration service that could accommodate custom-built Docker images, and thus we decided to utilize the private Docker registry provided by Magnum. The built-in Docker registry runs locally on each Kubernetes's worker nodes localhost. It does not require authentication, making it easy to publish and pull images without any configuration changes to Tutor.
+We needed a container orchestration service that could accommodate custom-built Docker images, and thus we decided to utilize the private Docker registry provided by Magnum. The built-in Docker registry runs locally on each Kubernetes's worker nodes localhost.
 
 The Docker registry supported by Magnum is just the official Docker registry image with the OpenStack Swift storage driver. When invoked by Magnum, it is Magnum that automatically populates the registry's storage configuration with the necessary parameters to match the Swift endpoint in the region it's running in. In our CI, we duplicate this for a locally-running registry instance, backed by the same storage parameters, that we push our images to. Once we do, any thus-registered image becomes available to our Magnum registries.
 
@@ -49,17 +46,16 @@ The template defines paramters how the cluster will be constructed.
 
 In our production environment, we have six node Kubernetes clusters, three control plane nodes, and three worker nodes.
 
-We deploy our cluster with Kubernetes version as v.1.21.10 on Fedora CoreOS 34 with Cinder CSI driver enabled.
- Openstack Cinder is a block storage service that allows you to create persistent volumes for your Kubernetes cluster. By enabling the Cinder CSI driver on your Magnum cluster, you can create persistent volumes backed by Cinder block storage.
+We deploy our cluster with Cinder CSI driver enabled. So that we can create persistent volumes for our Kubernetes cluster backed by Cinder block storage.
 
-Octavia is the OpenStack load balancing service. We create a Kubernetes cluster with Magnum and use an Octavia Load Balancer to access it from the public network, via the the load balancer’s floating IP.
+And, we use Octavia (OpenStack load balancing service) to expose our Kubernetes cluster to the outside world via LoadBlancer type service.
 
 
 ## Ceph <!-- .element class="hidden" -->
 ![Ceph logo](images/ceph-logo.svg)
 <!-- Note -->
 
-To achieve automatic replication between the primary and DR site, we use Backup and Restore policy using the Ceph object gateway S3 API. We don't use the multi-site replication as provided by Ceph natively.
+We use the Ceph object gateway S3 API to achieve automatic replication between the primary and DR site. We don't use the multi-site replication as provided by Ceph natively.
 
 In our Kubernetes environment, the backup and restore process is implemented using cron jobs.
 
