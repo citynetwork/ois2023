@@ -56,10 +56,10 @@ The edX platform consists of three main components. Firstly, the Learning Manage
 
 
 <!-- .slide: data-background-image="images/studio-screenshot.png" data-background-size="contain" -->
-### Studio <!-- .element class="hidden" -->
+### Open edX Studio <!-- .element class="hidden" -->
 
 <!-- Note -->
-Secondly, the platform includes Studio, an advanced course creation tool designed for instructors. It is the content management system for creating courses and course libraries in the Open edX platform.
+Secondly, the platform includes Open edX Studio, an advanced course creation tool designed for instructors. It is the content management system for creating courses and course libraries in the Open edX platform.
 
 
 <!-- .slide: data-background-image="images/django-admin-screenshot.png" data-background-size="contain" -->
