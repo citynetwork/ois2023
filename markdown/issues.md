@@ -1,7 +1,7 @@
 # Some issues
 
 
-## LoadBalancer type services
+## `LoadBalancer` services
 
 <!-- Note -->
 
@@ -9,6 +9,14 @@ In a recent incident, we lost access to our learning platforms. It was because t
 
 So we lost accessibility to services that expose our Open edX platforms which are load-balanced behind Octavia, and also the Kubernetes API service. As a result, we can't execute any commands against the cluster. Therefore we can't initiate failover to our disaster recovery site as it requires some scripts to run against the cluster.
 
+
+### Octavia always gets fixed last <!-- .element class="hidden" -->
+**In a large-scale outage,  
+Octavia is always fixed last**
+
+(because it requires Nova and Neutron to work)
+
+<!-- Note -->
 This incident highlighted flaws in our DR policy and our failover process. Our systems will only work once Octavia is fixed. And Octavia always gets fixed last, and there's no way around that: for Octavia to work, Nova and Neutron must work, and so that means after a complete site meltdown, you must always get controllers up, and then Nova and Neutron, and only then can you look into fixing Octavia and broken load balancers. 
 
 Even after these issues are solved and we can communicate with the Octavia API, the load balancers are often stuck in an ERROR state, which we can't fix on our own.
@@ -47,6 +55,12 @@ We could not figure out any way to expose our services without Loadbalancer. But
 What are Orphaned pods in a Kubernetes cluster?
 
 Orphaned pods can occur in Kubernetes when their owner objects, such as a deployment, replica set, or replication controller, is deleted or modified.
+
+
+### Orphaned Pods: kubelet misbehaving <!-- .element class="hidden" -->
+`kubelet` failing to clean up `Terminating` pods
+
+<!-- Note -->
 By default, Kubernetes deletes these dependent objects. Therefore, the responsibility of cleaning up these objects lies with the kubelet.
 
 What is kubelet?
@@ -58,6 +72,11 @@ When kubelet fails to delete these dependent objects, orphaned pods remain dangl
 
 We are facing this issue while performing a rolling update in our deployment.
 
+
+### Orphaned Pods: RWO volumes <!-- .element class="hidden" -->
+`RWO` volumes keep pods from terminating
+
+<!-- Note -->
 What happens in a rolling deployment?
 During a rolling deployment, the controller deletes and recreates pods with the updated configuration, one by one, without causing downtime to the cluster.
 
@@ -67,6 +86,13 @@ When we check kubelet logs, we notice massive log entries stating "Orphaned pod 
 
 This problem of pods getting stuck in the "Terminating" state due to the inability to clean volume subPath mounts is a known issue in Kubernetes. Several users have reported similar issues and there is no definite cause what arises the issue.
 
+
+### Orphaned Pods: Workaround <!-- .element class="hidden" -->
+**Workaround:** restart `kubelet`
+
+(but this kinda sucks, really)
+
+<!-- Note -->
 The workaround suggested in the bug reports was to manually delete the orphaned pod directory and restart the kubelet service, which works for us also. But we have a CI driven deployment and it's very complicated to manually shell into nodes and deleting stale directories when the pipeline is waiting on terminating (orphaned) pods, which will be stuck forever if stale directories are not manually deleted.
 
 
