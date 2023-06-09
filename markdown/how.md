@@ -77,6 +77,26 @@ We make all configuration and setup changes to an Open edX environment directly
 
 So, we have an end-to-end Tutor deployment, to a Magnum-managed Kubernetes cluster, from Zuul.
 
+
+### Zuul branches <!-- .element class="hidden" -->
+
+```plain
+main   # (we build container images here)
+ |
+ +-- platform-A → namespace-A
+     + platform-A-site-1
+     + platform-A-site-2
+ |
+ +-- platform-B → namespace-B
+     + platform-B-site-1
+     + platform-B-site-2
+ |
+ +-- platform-C → namespace-C
+     + platform-C-site-1
+     + platform-C-site-2
+```
+
+<!-- Note -->
 Let me explain our workflow in more detail:
 
 * We run multiple platforms, so we have different topic branches for every platform that uses a separate Kubernetes namespace.
