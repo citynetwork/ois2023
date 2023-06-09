@@ -20,7 +20,7 @@ So, since the Ceph Object Gateway gives us the option of running *both* APIs, we
 
 <!-- Note -->
 In principle we *could* terminate HTTPS in Octavia, rather than in Caddy like we do today.
-OCCM, that is the OpenStack Cloud Controller Manager, supports this through a service annotation.
+OCCM, that is the OpenStack Cloud Controller Manager, [supports this through a service annotation](https://github.com/kubernetes/cloud-provider-openstack/blob/master/docs/openstack-cloud-controller-manager/expose-applications-using-loadbalancer-type-service.md).
 
 The way that works, it would look like this:
 
