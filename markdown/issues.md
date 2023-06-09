@@ -85,9 +85,8 @@ As per the bug reports the orphaned pods issue is present in Kubernetes versions
 ## Kubernetes versions
 
 <!-- Note -->
+One other issue is that Kubernetes releases available in Magnum frequently are quite bit behind upstream. For example, the current most recent Kubernetes version supported in Xena is 1.21.
 
-In our cloud infrastructure, we currently have OpenStack Xena deployed. This version of OpenStack only supports Kubernetes up to version 1.21.x, and "officially" only supports Fedora CoreOS 31 (although we at least got it to run on Fedora CoreOS 34). As we are experiencing issues with orphaned pods and the solutions available in newer Kubernetes versions can't be deployed and we are using Fedora CoreOS 34 which has reached its EOL,  which means it is no longer supported and may not receive critical updates and security patches. 
+Even after we upgrade from OpenStack Xena to Openstack Antelope, we get official support for Kubernetes version v1.24 — but this probably won't fix our Orphaned pod issue.
 
-If we upgrade from OpenStack Xena to Openstack Antelope also, we get official support for Kubernetes version v1.24 which will not fix the Orphaned pod issue and will also be end of life in few days (2023-07-28).
-
-So with Openstack Magnum we are running the limitation of running older or EOL kubernetes versions.
+So with Openstack Magnum we are running the limitation of running older Kubernetes versions, or even versions that are beyond their end-of-life.
